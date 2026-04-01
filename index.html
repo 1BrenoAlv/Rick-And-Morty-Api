@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=7">
+    <meta name="description" content="Site consumindo API do desenho Rick and Morty">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="Rick and Morty, Consumo Api, API">
+    <meta name="author" content="1brenoalv">
+    <meta name="robots" content="index, follow">
+    <link rel="shortcut icon" href="./assets/img/icon/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Rick and Morty</title>
+</head>
+
+<body>
+    <header>
+        <div id="logo-header">
+            <div id="img-logo"></div>
+            <h1>Rick and Morty Explorer</h1>
+        </div>
+        <div id="hours-header">
+            <span>Data Indisponivel</span>
+        </div>
+    </header>
+    <div id="container-main">
+        <aside>
+            <div id="search">
+                <span for="search" class="label-filter">Buscar</span>
+                <input type="search" id="inp-search" placeholder="Buscar por nome...">
+            </div>
+            <form>
+                <div id="inp-filter">
+                    <label for="filter-status" class="label-filter">Filtros</label>
+                    <select name="filter-status" id="filter-status" class="">
+                        <option value="" disabled selected>Todos os status</option>
+                        <option value="Alive">Alive</option>
+                        <option value="Dead">Dead</option>
+                        <option value="Unknown">Unknown</option>
+                    </select>
+                    <select name="filter-status" id="filter-status" class="">
+                        <option value="" disabled selected>Todas as espécies</option>
+                        <option value="Human">Human</option>
+                        <option value="Alien">Alien</option>
+                    </select>
+                    <select name="filter-status" id="filter-status" class="">
+                        <option value="" disabled selected>Todos os gêneros</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Genderless">Genderless</option>
+                        <option value="Unknown">Unknown</option>
+                    </select>
+                    <div id="btn-filter">
+                        <button id="clear-filter" type="button">Limpar Filtros</button>
+                        <button id="apply-filter" type="button">Aplicar</button>
+                    </div>
+                </div>
+            </form>
+            <div id="legend-aside">
+                <span class="label-filter">Legenda</span>
+                <ul id="list-legend">
+                    <li>
+                        <span class="status-person alive"></span>
+                        Alive
+                    </li>
+                    <li>
+                        <span class="status-person dead"></span>
+                        Dead
+                    </li>
+                    <li>
+                        <span class="status-person unknown"></span>
+                        Unknown
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        <main>
+            <section>
+                <div id="list-person">
+
+                </div>
+
+            </section>
+            <section id="btns">
+                <span>20 de 240 personagens</span>
+
+            </section>
+        </main>
+    </div>
+
+    <script src="./js/main.js"></script>
+    <script src="./js/utils.js"></script>
+    <script src="./js/services.js"></script>
+</body>
+
+</html>
