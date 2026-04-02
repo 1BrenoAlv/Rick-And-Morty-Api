@@ -10,8 +10,9 @@
     <meta name="keywords" content="Rick and Morty, Consumo Api, API">
     <meta name="author" content="1brenoalv">
     <meta name="robots" content="index, follow">
-    <link rel="shortcut icon" href="./assets/img/icon/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/icon/favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/loading.css">
     <title>Rick and Morty</title>
 </head>
 
@@ -27,34 +28,34 @@
     </header>
     <div id="container-main">
         <aside>
-            <div id="search">
-                <span for="search" class="label-filter">Buscar</span>
-                <input type="search" id="inp-search" placeholder="Buscar por nome...">
-            </div>
-            <form>
+            <form id="form-filter">
+                <div id="search">
+                    <span for="search" class="label-filter">Buscar</span>
+                    <input type="search" id="inp-search" placeholder="Buscar por nome...">
+                </div>
                 <div id="inp-filter">
                     <label for="filter-status" class="label-filter">Filtros</label>
                     <select name="filter-status" id="filter-status" class="">
-                        <option value="" disabled selected>Todos os status</option>
-                        <option value="Alive">Alive</option>
-                        <option value="Dead">Dead</option>
-                        <option value="Unknown">Unknown</option>
+                        <option value=""  selected>Todos os status</option>
+                        <option value="alive">Alive</option>
+                        <option value="dead">Dead</option>
+                        <option value="unknown">Unknown</option>
                     </select>
-                    <select name="filter-status" id="filter-status" class="">
-                        <option value="" disabled selected>Todas as espécies</option>
-                        <option value="Human">Human</option>
-                        <option value="Alien">Alien</option>
+                    <select name="filter-status" id="filter-species" class="">
+                        <option value=""  selected>Todas as espécies</option>
+                        <option value="human">Human</option>
+                        <option value="alien">Alien</option>
                     </select>
-                    <select name="filter-status" id="filter-status" class="">
-                        <option value="" disabled selected>Todos os gêneros</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Genderless">Genderless</option>
-                        <option value="Unknown">Unknown</option>
+                    <select name="filter-status" id="filter-gender" class="">
+                        <option value=""  selected>Todos os gêneros</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="genderless">Genderless</option>
+                        <option value="unknown">Unknown</option>
                     </select>
                     <div id="btn-filter">
-                        <button id="clear-filter" type="button">Limpar Filtros</button>
-                        <button id="apply-filter" type="button">Aplicar</button>
+                        <button id="apply-filter"  type="submit">Aplicar</button>
+                        <button id="clear-filter"  type="reset">Limpar Filtros</button>
                     </div>
                 </div>
             </form>
@@ -78,17 +79,32 @@
         </aside>
         <main>
             <section>
-                <div id="list-person">
-
-                </div>
-
+                <div id="list-person"></div>
             </section>
-            <section id="btns">
-                <span>20 de 240 personagens</span>
-
-            </section>
+            <section id="btns"></section>
         </main>
     </div>
+    <dialog id="modal-person">
+        <div id="img-modal">
+        </div>
+        <div id="info-modal">
+            <div id="name-modal">
+                <span id="space-name-modal"></span>
+            </div>
+            <div id="type-modal">
+                <span class="status-modal unknown"></span>
+                <span id="gander-modal"></span>
+            </div>
+            <div id="location-modal">
+                <div ><span class="left-modal">Origem</span> <span class="right-modal"></span></div>
+                <div ><span class="left-modal">Localização</span> <span class="right-modal"></span></div>
+                <div ><span class="left-modal">Episódios</span> <span class="right-modal"></span></div>
+            </div>
+            <div id="close-modal">
+                <button id="btn-close">Fechar</button>
+            </div>
+        </div>
+    </dialog>
 
     <script src="./js/main.js"></script>
     <script src="./js/utils.js"></script>
