@@ -26,18 +26,25 @@ const fetchApi = async () => {
 
         const response = await fetch(url)
         const data = await response.json()
-        const pagesTotal = data.info.pages
-        const personTotal = data.info.count
         persoCurrent = data.results
-        if (data.error) {
+
+        if (!response.ok || data.error) {
             listCards.innerHTML = `<p class="erro-p">Nenhum Personagem Encontrado 😭</p>`
             divBtns.innerHTML = ''
             return
         }
-        const listCardHtml = data.results.map(person => renderCards(person))
+
+        const nextPageExist = data.info.next !== null
+        const prevPageExist = data.info.prev !== null
+
+        const pagesTotal = data.info.pages
+        const personTotal = data.info.count
+        const results = data.results
+        const listCardHtml = results.map(person => renderCards(person))
         listCards.innerHTML = listCardHtml.join("")
         const personCurrent = listCardHtml.length
-        filterPage(pagesTotal, personCurrent, personTotal)
+        filterPage(pagesTotal, personCurrent, personTotal, prevPageExist, nextPageExist)
+
     } catch (error) {
         console.error(`Erro na requisição: ${error}`)
         listCards.innerHTML = `<p class="erro-p">Erro Interno😭</p>`
@@ -91,35 +98,19 @@ const previousPage = () => {
     listCards.innerHTML = '<div class="loader"></div>'
 }
 
-const filterPage = (pagesTotal, personCurrent, personTotal) => {
+const filterPage = (pagesTotal, personCurrent, personTotal, prev,next) => {
     if (numberPage != null) {
-        if (numberPage === 1 || numberPage < 1) {
-            divBtns.innerHTML = ` 
-             <div class="current-person"> <span>Mostrando ${personCurrent} de ${personTotal}</span> </div>
-            <div class="sec-btn">
-                <span id="count-page">Página ${numberPage} de ${pagesTotal}</span>
-            <button id="btn-next" class="btn-page" onclick="nextPage()">Proxima Página</button>
-            </div>`
-        }
-        else if (numberPage === pagesTotal) {
-            divBtns.innerHTML = `
+        const btnNext = next ? `<button id="btn-next" class="btn-page" onclick="nextPage()">Proxima Página </button>` : ''
+        const btnPrev = prev ? `<button id="btn-previous" class="btn-page" onclick="previousPage()" >Página Anterior</button>` : ''
+        divBtns.innerHTML = `
             <div class="current-person"> <span>Mostrando ${personCurrent} de ${personTotal}</span> </div>
             <div class="sec-btn">
-            <button id="btn-previous" class="btn-page" onclick="previousPage()" >Página Anterior</button>
-             <span id="count-page">Página ${numberPage} de ${pagesTotal}</span></div>
-            `
-        }
-        else {
-            divBtns.innerHTML = `
-             <div class="current-person"> <span>Mostrando ${personCurrent} de ${personTotal}</span> </div>
-             <div class="sec-btn">
-            <button id="btn-previous" class="btn-page" onclick="previousPage()" >Página Anterior</button>
-             <span id="count-page">Página ${numberPage} de ${pagesTotal}</span>
-            <button id="btn-next" class="btn-page" onclick="nextPage()">Proxima Página</button></div>
-            `
-        }
-    } else {
-        console.error(`Erro ao trocar de pagina`)
+            ${btnPrev}
+            <span id="count-page">Página ${numberPage} de ${pagesTotal}</span>
+            ${btnNext}
+        `
+    }else{
+        console.error('Erro ao Trocar de página')
     }
 }
 
@@ -136,23 +127,33 @@ formFilter.addEventListener('submit', e => {
     listCards.innerHTML = '<div class="loader"></div>'
 })
 
-// listCards.addEventListener('click' , e => {
-//     const cardClick = e.target.closest('.persons')
-//     if(!cardClick) return
-//     const persoId = cardClick.getAttribute('data-id')
-//     const persoCheck = persoCurrent.find(p => p.id == persoId)
-//     if(persoCheck)
-//         putModal(persoCheck)
-// })
+listCards.addEventListener('click' , e => {
+    const cardClick = e.target.closest('.persons')
+    if(!cardClick) return
+    const persoId = cardClick.getAttribute('data-id')
+    const persoCheck = persoCurrent.find(p => p.id == persoId)
+    if(persoCheck)
+        putModal(persoCheck)
+})
 
 const putModal = (perso) => {
-    document.getElementById('img-modal') = `<img src="${person.image}" alt="${perso.name}">`
+    document.getElementById('img-modal').innerHTML = `<img src="${perso.image}" alt="${perso.name}">`
     document.getElementById('space-name-modal').innerText = perso.name
+    const statusSpan = document.querySelector('.status-modal')
+    statusSpan.className = `status-modal ${perso.status.toLowerCase()}`
+    statusSpan.innerText = `${perso.status}`
+    document.getElementById('gander-modal').innerText = `${perso.species} - ${perso.gender}`
+    const spansRight = document.getElementsByClassName('right-modal')
+    spansRight[0].innerText = perso.origin.name
+    spansRight[1].innerText = perso.location.name
+    spansRight[2].innerText = perso.episode.length
+
+    modalPerson.showModal()
 }
 
-closeModal.addEventListener('click' , () =>{
+closeModal.addEventListener('click', () => {
     modalPerson.close()
-} )
+})
 
 
 
