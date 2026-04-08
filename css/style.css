@@ -365,12 +365,12 @@ body{
                  & .status-modal{
                 font-size: 16px;
                 font-weight: 500;
-                padding: 2px 5px;
+                padding: 5px 10px;
                 border-radius: 15px;
                 
                     &.alive{
                             background-color: #54cc443f;
-                            color: #55cc44;
+                            color: #41c82f;
                     }
                     &.dead{
                             background-color: #d32f2f4b;
@@ -378,7 +378,7 @@ body{
                     }
                     &.unknown{
                             background-color: #9e9e9e3f;
-                            color: #9e9e9e;
+                            color: #787878;
                     }
                 }
             }

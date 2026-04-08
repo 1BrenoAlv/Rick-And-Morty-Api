@@ -47,7 +47,7 @@ const fetchApi = async () => {
 
     } catch (error) {
         console.error(`Erro na requisição: ${error}`)
-        listCards.innerHTML = `<p class="erro-p">Erro Interno😭</p>`
+        listCards.innerHTML = `<p class="erro-p">Falha na conexão. Verifique sua internet.</p>`
         divBtns.innerHTML = ''
     } finally {
         btnApply.disabled = false
@@ -58,8 +58,8 @@ const fetchApi = async () => {
 
 const renderCards = (person) => {
     let namePerson = person.name ?? 'Desconhecido'
-    let statusPerson = person.status ?? 'Desconhecido'
-    let speciesPerson = person.species ?? 'Desconhecida'
+    let statusPerson = translateStatus[person.status] || person.status
+    let speciesPerson = translateSpecies[person.species] || person.species
     let imagePerson = person.image != null ? `<img src="${person.image}" alt="Imagem do personagem ${namePerson} ">`
         : `<img src="./assets/image-desconhecida.png" alt="Imagem do personagem ${namePerson} ">`
 
@@ -71,7 +71,7 @@ const renderCards = (person) => {
                         <div class="info-person">
                             <span class="name-person">${namePerson}</span>
                             <div class="type-person">
-                                <span class="status-person ${statusPerson.toLowerCase()}"></span>
+                                <span class="status-person ${person.status.toLowerCase()}"></span>
                                 <p>${statusPerson} - ${speciesPerson}</p>
                             </div>
                         </div>
@@ -137,24 +137,56 @@ listCards.addEventListener('click' , e => {
 })
 
 const putModal = (perso) => {
-    document.getElementById('img-modal').innerHTML = `<img src="${perso.image}" alt="${perso.name}">`
-    document.getElementById('space-name-modal').innerText = perso.name
-    const statusSpan = document.querySelector('.status-modal')
-    statusSpan.className = `status-modal ${perso.status.toLowerCase()}`
-    statusSpan.innerText = `${perso.status}`
-    document.getElementById('gander-modal').innerText = `${perso.species} - ${perso.gender}`
-    const spansRight = document.getElementsByClassName('right-modal')
-    spansRight[0].innerText = perso.origin.name
-    spansRight[1].innerText = perso.location.name
-    spansRight[2].innerText = perso.episode.length
+    const status = translateStatus[perso.status] || perso.status;
+    const species = translateSpecies[perso.species] || perso.species;
+    const gender = translateGender[perso.gender] || perso.gender;
 
-    modalPerson.showModal()
+    document.getElementById('img-modal').innerHTML = `<img src="${perso.image}" alt="${perso.name}">`;
+    document.getElementById('space-name-modal').innerText = perso.name;
+    
+    const statusSpan = document.querySelector('.status-modal');
+    statusSpan.className = `status-modal ${perso.status.toLowerCase()}`;
+    statusSpan.innerText = status;
+    
+    document.getElementById('gander-modal').innerText = `${species} - ${gender}`;
+    
+    const rightSpans = document.getElementsByClassName('right-modal');
+    rightSpans[0].innerText = perso.origin.name;
+    rightSpans[1].innerText = perso.location.name;
+    rightSpans[2].innerText = perso.episode.length;
+
+    modalPerson.showModal();
 }
 
 closeModal.addEventListener('click', () => {
     modalPerson.close()
 })
 
+const translateStatus = {
+    'Alive': 'Vivo',
+    'Dead': 'Morto',
+    'unknown': 'Desconhecido'
+}
+
+const translateSpecies = {
+    'Human': 'Humano',
+    'Alien': 'Alienígena',
+    'Humanoid': 'Humanoide',
+    'Poopybutthole': 'Bunda-Cagada',
+    'Mythological': 'Mitológico',
+    'Animal': 'Animal',
+    'Robot': 'Robô',
+    'Cronenberg': 'Cronenberg',
+    'Disease': 'Doença',
+    'unknown': 'Desconhecido'
+}
+
+const translateGender = {
+    'Male': 'Masculino',
+    'Female': 'Feminino',
+    'Genderless': 'Sem Gênero',
+    'unknown': 'Desconhecido'
+}
 
 
 fetchApi();
