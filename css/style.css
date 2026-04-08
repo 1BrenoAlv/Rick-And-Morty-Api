@@ -46,7 +46,7 @@ body{
                 height: 50px;
                 border-radius: 10px;
                 background-color: aquamarine;
-                background-image: url('/assets/img/logo.png');
+                background-image: url('./assets/img/logo.png');
                 background-size: cover;
                 background-position: center;
             }
