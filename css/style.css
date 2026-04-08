@@ -46,7 +46,7 @@ body{
                 height: 50px;
                 border-radius: 10px;
                 background-color: aquamarine;
-                background-image: url('./assets/img/logo.png');
+                background-image: url('../assets/img/logo.png');
                 background-size: cover;
                 background-position: center;
             }
@@ -89,7 +89,26 @@ body{
                 font-weight: 500;
                 border: 1px solid var(--color-border);
                 border-radius: 7px;
-                
+                cursor: pointer;
+                outline: none;
+                transition: all 0.18s ease-in-out;
+
+                &:hover{
+                    border-color: rgba(13, 19, 33, 0.4);
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                }
+
+                &:focus{
+                    border-color: var(--color-border);
+                    box-shadow: 0 0 0 2px #03419750;
+                }
+            }
+            & button, select {
+                cursor: pointer;
+            }
+
+            & input {
+                cursor: text;
             }
 
             & .label-filter{
@@ -124,6 +143,11 @@ body{
                     margin-top: 10px;
                     color: white;
                     cursor: pointer;
+                    transition: all 0.2s ease-in;
+
+                    &:hover{
+                        transform: scale(1.05);
+                    }
                 }
                 & #apply-filter{
                     width: 100%;
@@ -133,6 +157,11 @@ body{
                     text-align: center;
                     margin-top: 10px;
                     cursor: pointer;
+                    transition: all 0.2s ease-in;
+
+                    &:hover{
+                        transform: scale(1.05);
+                    }
                 }
              }
 
